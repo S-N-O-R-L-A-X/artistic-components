@@ -2,25 +2,18 @@ name: blog-post
 on:
   push:
     branches:
-      - main
+      - "main" # change to the branch you wish to deploy from
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  main:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    - id: build-publish
+      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
       with:
-        persist-credentials: false
-        
-    - name: Install and Build
-      run: |
-        npm install
-        npm run build
-     
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        ACCESS_TOKEN: ${{ secrets.ART }}
-        BRANCH: gh-pages
-        FOLDER: dist
+        path: build # change to your build folder
