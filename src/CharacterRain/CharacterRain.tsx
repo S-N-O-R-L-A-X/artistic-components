@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useInterval } from '../hooks/useInterval';
 
 // Constants
-const VALID_CHARS = `abcdefghijklmnopqrstuvwxyz0123456789$+-*/=%"'#&_(),.;:?!\\|{}<>[]^~`;
+const DEFAULT_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
 const STREAM_MUTATION_ODDS = 0.02;
 
 const MIN_STREAM_SIZE = 15;
@@ -17,25 +17,31 @@ const MAX_DELAY_BETWEEN_STREAMS = 8000;
 const getRandInRange = (min: number, max: number) =>
 	Math.floor(Math.random() * (max - min)) + min;
 
-const getRandChar = () => VALID_CHARS.charAt(Math.floor(Math.random() * VALID_CHARS.length));
+const getRandChar = (str: string) => str.charAt(Math.floor(Math.random() * str.length));
 
-const getRandStream = () => new Array(getRandInRange(MIN_STREAM_SIZE, MAX_STREAM_SIZE)).fill(0).map(_ => getRandChar());
+const getRandStream = (charset: string) => new Array(getRandInRange(MIN_STREAM_SIZE, MAX_STREAM_SIZE)).fill(0).map(_ => getRandChar(charset));
 
-function getMutatedStream(stream: string[]): string[] {
+function getMutatedStream(stream: string[], charset: string): string[] {
 	const newStream = [];
 	for (let i = 1; i < stream.length; i++) {
 		if (Math.random() < STREAM_MUTATION_ODDS) {
-			newStream.push(getRandChar());
+			newStream.push(getRandChar(charset));
 		} else {
 			newStream.push(stream[i]);
 		}
 	}
-	newStream.push(getRandChar());
+	newStream.push(getRandChar(charset));
 	return newStream;
 };
 
-const RainStream = (props: any) => {
-	const [stream, setStream] = useState<string[]>(getRandStream());
+interface RainStreamProps {
+	charset?: string;
+	height: number;
+}
+
+const RainStream = (props: RainStreamProps) => {
+	const { charset = DEFAULT_CHARS, height } = props;
+	const [stream, setStream] = useState<string[]>(getRandStream(charset));
 	const [topPadding, setTopPadding] = useState(stream.length * -50);
 	const [intervalDelay, setIntervalDelay] = useState<number | null>(null);
 
@@ -52,9 +58,9 @@ const RainStream = (props: any) => {
 		if (!intervalDelay) return;
 
 		// If stream is off the screen, reset it after timeout
-		if (topPadding > props.height) {
+		if (topPadding > height) {
 			setStream([]);
-			const newStream = getRandStream();
+			const newStream = getRandStream(charset);
 			setStream(newStream);
 			setTopPadding(newStream.length * -44);
 			setIntervalDelay(null);
@@ -67,7 +73,7 @@ const RainStream = (props: any) => {
 			setTopPadding(topPadding + 44);
 		}
 		// setStream(stream => [...stream.slice(1, stream.length), getRandChar()]);
-		setStream(getMutatedStream);
+		setStream(getMutatedStream([...stream.slice(1, stream.length), getRandChar(charset)], charset));
 	}, intervalDelay!);
 
 	return (
@@ -101,7 +107,13 @@ const RainStream = (props: any) => {
 	);
 };
 
-const MatrixRain = (props: any) => {
+interface MatrixRainProps {
+	width?: string | number;
+	height: string | number;
+}
+
+const MatrixRain = (props: MatrixRainProps) => {
+	// const { width, height } = props;
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [containerSize, setContainerSize] = useState<{ width: number, height: number } | null>(null);
 
@@ -118,12 +130,12 @@ const MatrixRain = (props: any) => {
 	return (
 		<div
 			style={{
-				background: 'black',
 				position: 'fixed',
 				top: 0,
 				left: 0,
 				bottom: 0,
 				right: 0,
+				background: 'black',
 				overflow: 'ignore',
 				display: 'flex',
 				flexDirection: 'row',
@@ -131,7 +143,7 @@ const MatrixRain = (props: any) => {
 			}}
 			ref={containerRef}>
 			{new Array(streamCount).fill(0).map(_ => (
-				<RainStream height={containerSize?.height} />
+				<RainStream height={containerSize!.height} />
 			))}
 		</div>
 	);
