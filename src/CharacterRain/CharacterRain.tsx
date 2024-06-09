@@ -7,7 +7,7 @@ const getRandInRange = (min: number, max: number) =>
 
 const getRandChar = (str: string) => str.charAt(Math.floor(Math.random() * str.length));
 
-const getRandStream = (charset: string) => new Array(getRandInRange(MIN_STREAM_SIZE, MAX_STREAM_SIZE)).fill(0).map(_ => getRandChar(charset));
+const getRandStream = (charset: string, maxStringAmount: number = MAX_STREAM_SIZE) => new Array(getRandInRange(MIN_STREAM_SIZE, maxStringAmount)).fill(0).map(_ => getRandChar(charset));
 
 function getMutatedStream(stream: string[], charset: string): string[] {
 	const newStream = [];
@@ -24,11 +24,14 @@ function getMutatedStream(stream: string[], charset: string): string[] {
 
 interface RainStreamProps {
 	charset?: string;
+	fontFamily?: string;
+	fontColor?: string;
+	fontSize?: number;
 	height: number;
 }
 
 const RainStream = (props: RainStreamProps) => {
-	const { charset = DEFAULT_CHARS, height } = props;
+	const { charset = DEFAULT_CHARS, fontFamily = "matrixFont", fontColor = "#20c20e", fontSize,  height } = props;
 	const [stream, setStream] = useState<string[]>(getRandStream(charset));
 	const [topPadding, setTopPadding] = useState(stream.length * -50);
 	const [intervalDelay, setIntervalDelay] = useState<number | null>(null);
@@ -67,17 +70,17 @@ const RainStream = (props: RainStreamProps) => {
 	return (
 		<div
 			style={{
-				fontFamily: 'matrixFont',
-				color: '#20c20e',
+				fontFamily: fontFamily,
+				color: fontColor,
+				fontSize: fontSize,
 				writingMode: 'vertical-rl',
 				textOrientation: 'upright',
 				userSelect: 'none',
 				whiteSpace: 'nowrap',
 				marginTop: topPadding,
-				marginLeft: -15,
-				marginRight: -15,
+				// marginLeft: -15,
+				// marginRight: -15,
 				textShadow: '0px 0px 8px rgba(32, 194, 14, 0.8)',
-				fontSize: 50,
 			}}>
 			{stream.map((char, index) => (
 				<a
@@ -95,34 +98,31 @@ const RainStream = (props: RainStreamProps) => {
 	);
 };
 
-interface MatrixRainProps {
+interface MatrixRainProps extends Omit<RainStreamProps, "width" | "height"> {
 	width?: string | number;
 	height: string | number;
 }
 
 const MatrixRain = (props: MatrixRainProps) => {
-	// const { width, height } = props;
+	const { width = 800, height = 400, fontSize = 48, ...rest } = props;
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [containerSize, setContainerSize] = useState<{ width: number, height: number } | null>(null);
+	const [containerSize, setContainerSize] = useState<{ width: number, height: number } | null>({ width: Number(width), height: Number(height) });
 
-	useEffect(() => {
-		const boundingClientRect = containerRef.current!.getBoundingClientRect();
-		setContainerSize({
-			width: boundingClientRect.width,
-			height: boundingClientRect.height,
-		});
-	}, []);
+	// useEffect(() => {
+	// 	const boundingClientRect = containerRef.current!.getBoundingClientRect();
+	// 	setContainerSize({
+	// 		width: boundingClientRect.width,
+	// 		height: boundingClientRect.height,
+	// 	});
+	// }, []);
 
-	const streamCount = containerSize ? Math.floor(containerSize.width / 26) : 0;
+	const streamCount = containerSize ? Math.floor(containerSize.width / (fontSize + 16)) : 0;
 
 	return (
 		<div
 			style={{
-				position: 'fixed',
-				top: 0,
-				left: 0,
-				bottom: 0,
-				right: 0,
+				width,
+				height,
 				background: 'black',
 				overflow: 'ignore',
 				display: 'flex',
@@ -131,7 +131,7 @@ const MatrixRain = (props: MatrixRainProps) => {
 			}}
 			ref={containerRef}>
 			{new Array(streamCount).fill(0).map(_ => (
-				<RainStream height={containerSize!.height} />
+				<RainStream height={containerSize!.height} fontSize={fontSize} {...rest} />
 			))}
 		</div>
 	);
