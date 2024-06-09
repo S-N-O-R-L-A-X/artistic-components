@@ -1,18 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInterval } from '../hooks/useInterval';
-
-// Constants
-const DEFAULT_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
-const STREAM_MUTATION_ODDS = 0.02;
-
-const MIN_STREAM_SIZE = 15;
-const MAX_STREAM_SIZE = 50;
-
-const MIN_INTERVAL_DELAY = 50;
-const MAX_INTERVAL_DELAY = 100;
-
-const MIN_DELAY_BETWEEN_STREAMS = 0;
-const MAX_DELAY_BETWEEN_STREAMS = 8000;
+import { DEFAULT_CHARS, MAX_DELAY_BETWEEN_STREAMS, MAX_INTERVAL_DELAY, MAX_STREAM_SIZE, MIN_DELAY_BETWEEN_STREAMS, MIN_INTERVAL_DELAY, MIN_STREAM_SIZE, STREAM_MUTATION_ODDS } from './constants';
 
 const getRandInRange = (min: number, max: number) =>
 	Math.floor(Math.random() * (max - min)) + min;
@@ -53,7 +41,7 @@ const RainStream = (props: RainStreamProps) => {
 	}, []);
 
 	useInterval(() => {
-		if (!props.height) return;
+		if (!height) return;
 
 		if (!intervalDelay) return;
 
