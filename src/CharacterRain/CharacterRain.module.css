@@ -1,0 +1,14 @@
+.characterRainWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.stream {
+	writing-mode: vertical-rl;
+	text-orientation: upright;
+	user-select: none;
+	white-space: nowrap;
+	text-shadow: 0px 0px 8px rgba(32, 194, 14, 0.8);
+}

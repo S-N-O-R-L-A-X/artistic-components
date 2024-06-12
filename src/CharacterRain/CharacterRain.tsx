@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import {  HTMLAttributes, useEffect, useRef, useState } from 'react';
 import { useInterval } from '../hooks/useInterval';
 import { DEFAULT_CHARS, MAX_DELAY_BETWEEN_STREAMS, MAX_INTERVAL_DELAY, MAX_STREAM_SIZE, MIN_DELAY_BETWEEN_STREAMS, MIN_INTERVAL_DELAY, MIN_STREAM_SIZE, STREAM_MUTATION_ODDS } from './constants';
+
+import styles from "./CharacterRain.module.css";
 
 const getRandInRange = (min: number, max: number) =>
 	Math.floor(Math.random() * (max - min)) + min;
@@ -22,7 +24,7 @@ function getMutatedStream(stream: string[], charset: string): string[] {
 	return newStream;
 };
 
-interface RainStreamProps {
+interface RainStreamProps extends HTMLAttributes<HTMLDivElement> {
 	charset?: string;
 	fontFamily?: string;
 	fontColor?: string;
@@ -31,7 +33,7 @@ interface RainStreamProps {
 }
 
 const RainStream = (props: RainStreamProps) => {
-	const { charset = DEFAULT_CHARS, fontFamily = "matrixFont", fontColor = "#20c20e", fontSize,  height } = props;
+	const { charset = DEFAULT_CHARS, fontFamily = "matrixFont", fontColor = "#20c20e", fontSize, height } = props;
 	const [stream, setStream] = useState<string[]>(getRandStream(charset));
 	const [topPadding, setTopPadding] = useState(stream.length * -50);
 	const [intervalDelay, setIntervalDelay] = useState<number | null>(null);
@@ -69,18 +71,12 @@ const RainStream = (props: RainStreamProps) => {
 
 	return (
 		<div
+			className={styles.stream}
 			style={{
 				fontFamily: fontFamily,
 				color: fontColor,
 				fontSize: fontSize,
-				writingMode: 'vertical-rl',
-				textOrientation: 'upright',
-				userSelect: 'none',
-				whiteSpace: 'nowrap',
 				marginTop: topPadding,
-				// marginLeft: -15,
-				// marginRight: -15,
-				textShadow: '0px 0px 8px rgba(32, 194, 14, 0.8)',
 			}}>
 			{stream.map((char, index) => (
 				<a
@@ -99,12 +95,13 @@ const RainStream = (props: RainStreamProps) => {
 };
 
 interface MatrixRainProps extends Omit<RainStreamProps, "width" | "height"> {
+	backgroundColor?: string;
 	width?: string | number;
 	height: string | number;
 }
 
 const MatrixRain = (props: MatrixRainProps) => {
-	const { width = 800, height = 400, fontSize = 48, ...rest } = props;
+	const { width = 800, height = 400, backgroundColor = "black", fontSize = 48, ...rest } = props;
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [containerSize, setContainerSize] = useState<{ width: number, height: number } | null>({ width: Number(width), height: Number(height) });
 
@@ -120,14 +117,11 @@ const MatrixRain = (props: MatrixRainProps) => {
 
 	return (
 		<div
+			className={styles.characterRainWrapper}
 			style={{
 				width,
 				height,
-				background: 'black',
-				overflow: 'ignore',
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'center',
+				backgroundColor
 			}}
 			ref={containerRef}>
 			{new Array(streamCount).fill(0).map(_ => (
