@@ -7,6 +7,40 @@
 	border-radius: .25rem;
 	padding: .5rem;
 	z-index: 100;
+	cursor: pointer;
+	border: none;
+	color: #fff;
+	transition: all 0.3s ease;
+	background-color: #89d8d3;
+	background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+}
+
+.money:after {
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 0;
+	bottom: 0;
+	left: 0;
+	z-index: -100;
+	border-radius: 5px;
+	background-color: #4dccc6;
+	background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+	box-shadow:
+		-7px -7px 20px 0px #fff9,
+		-4px -4px 5px 0px #fff9,
+		7px 7px 20px 0px #0002,
+		4px 4px 5px 0px #0001;
+	transition: all 0.3s ease;
+}
+
+.money:hover {
+	color: #fff;
+}
+
+.money:hover:after {
+	top: 0;
+	height: 100%;
 }
 
 .background {
@@ -15,13 +49,14 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: -100;
+	z-index: -10;
 }
 
 .money i {
 	display: inline-block;
 	width: 2rem;
 	height: 2rem;
+	margin: .1rem;
 	position: relative;
 	z-index: 1;
 	-webkit-animation: money 3s linear 2s 20;
