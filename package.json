@@ -4,7 +4,7 @@
   "type": "module",
   "author": "snorlax.xu",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run storybook",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "preview": "vite preview",
