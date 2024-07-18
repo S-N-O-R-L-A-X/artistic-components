@@ -6,6 +6,11 @@ import CharacterRain from "./CharacterRain";
 const meta: Meta<typeof CharacterRain> = {
 	title: 'CharacterRain',
 	component: CharacterRain,
+	args: {
+		width: 800,
+		height: 600,
+		backgroundColor: "black"
+	}
 };
 
 export default meta;
@@ -13,5 +18,5 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
 	name: 'example',
-	render: () => <CharacterRain height={600} />
+	render: (args) => <CharacterRain {...args} />
 };

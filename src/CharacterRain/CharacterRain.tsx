@@ -1,4 +1,4 @@
-import {  HTMLAttributes, useEffect, useRef, useState } from 'react';
+import { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import { useInterval } from '../hooks/useInterval';
 import { DEFAULT_CHARS, MAX_DELAY_BETWEEN_STREAMS, MAX_INTERVAL_DELAY, MAX_STREAM_SIZE, MIN_DELAY_BETWEEN_STREAMS, MIN_INTERVAL_DELAY, MIN_STREAM_SIZE, STREAM_MUTATION_ODDS } from './constants';
 
@@ -33,7 +33,7 @@ interface RainStreamProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const RainStream = (props: RainStreamProps) => {
-	const { charset = DEFAULT_CHARS, fontFamily = "matrixFont", fontColor = "#20c20e", fontSize, height } = props;
+	const { charset = DEFAULT_CHARS, fontFamily, fontColor, fontSize, height } = props;
 	const [stream, setStream] = useState<string[]>(getRandStream(charset));
 	const [topPadding, setTopPadding] = useState(stream.length * -50);
 	const [intervalDelay, setIntervalDelay] = useState<number | null>(null);
@@ -101,16 +101,16 @@ interface MatrixRainProps extends Omit<RainStreamProps, "width" | "height"> {
 }
 
 const MatrixRain = (props: MatrixRainProps) => {
-	const { width = 800, height = 400, backgroundColor = "black", fontSize = 48, ...rest } = props;
+	const { width = 800, height = 400, backgroundColor = "black", fontFamily = "matrixFont", fontColor = "#20c20e", fontSize = 48, ...rest } = props;
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [containerSize, setContainerSize] = useState<{ width: number, height: number } | null>({ width: Number(width), height: Number(height) });
 
 	// useEffect(() => {
-	// 	const boundingClientRect = containerRef.current!.getBoundingClientRect();
-	// 	setContainerSize({
-	// 		width: boundingClientRect.width,
-	// 		height: boundingClientRect.height,
-	// 	});
+	//  const boundingClientRect = containerRef.current!.getBoundingClientRect();
+	//  setContainerSize({
+	//    width: boundingClientRect.width,
+	//    height: boundingClientRect.height,
+	//  });
 	// }, []);
 
 	const streamCount = containerSize ? Math.floor(containerSize.width / (fontSize + 16)) : 0;
@@ -125,7 +125,7 @@ const MatrixRain = (props: MatrixRainProps) => {
 			}}
 			ref={containerRef}>
 			{new Array(streamCount).fill(0).map(_ => (
-				<RainStream height={containerSize!.height} fontSize={fontSize} {...rest} />
+				<RainStream height={containerSize!.height} fontSize={fontSize} fontFamily={fontFamily} fontColor={fontColor} {...rest} />
 			))}
 		</div>
 	);
