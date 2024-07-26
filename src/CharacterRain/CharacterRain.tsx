@@ -103,7 +103,7 @@ interface MatrixRainProps extends Omit<RainStreamProps, "width" | "height"> {
 const MatrixRain = (props: MatrixRainProps) => {
 	const { width = 800, height = 400, backgroundColor = "black", fontFamily = "matrixFont", fontColor = "#20c20e", fontSize = 48, ...rest } = props;
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [containerSize, setContainerSize] = useState<{ width: number, height: number } | null>({ width: Number(width), height: Number(height) });
+	const containerSize = { width: Number(width), height: Number(height) }
 
 	// useEffect(() => {
 	//  const boundingClientRect = containerRef.current!.getBoundingClientRect();
@@ -111,7 +111,6 @@ const MatrixRain = (props: MatrixRainProps) => {
 	//    width: boundingClientRect.width,
 	//    height: boundingClientRect.height,
 	//  });
-	// }, []);
 
 	const streamCount = containerSize ? Math.floor(containerSize.width / (fontSize + 16)) : 0;
 
