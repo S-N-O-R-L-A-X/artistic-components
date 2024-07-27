@@ -5,7 +5,8 @@
   "author": "snorlax.xu",
   "scripts": {
     "dev": "npm run storybook",
-    "build": "tsc && vite build",
+    "build": "tsc && npm run copy-files",
+    "copy-files": "copyfiles -u 1 'src/**/*.{css,png,d.ts}' 'dist/'",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -30,6 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
