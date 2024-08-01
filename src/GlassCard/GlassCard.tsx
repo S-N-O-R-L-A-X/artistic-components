@@ -1,18 +1,18 @@
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 import styles from "./GlassCard.module.css";
 
-interface GlassCardProps {
+interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
 	title?: string;
-	content?: ReactNode;
+	text?: ReactNode;
 }
 
 export default function GlassCard(props: GlassCardProps) {
-	const { title, content } = props;
+	const { title, text, ...rest } = props;
 	return (
-		<div className={styles.glassCard}>
+		<div className={styles.glassCard} {...rest}>
 			<div className={styles.content}>
 				<h2>{title}</h2>
-				{content}
+				{text}
 				<a href="#">Read More</a>
 			</div>
 		</div>
