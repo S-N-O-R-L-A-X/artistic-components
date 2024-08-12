@@ -42,6 +42,4 @@
 .github-corner svg {
   color: #fff;
   fill: black;
-  height: var(--header-height);
-  width: var(--header-height);
 }

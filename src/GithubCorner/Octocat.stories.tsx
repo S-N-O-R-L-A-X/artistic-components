@@ -8,9 +8,6 @@ const meta: Meta<typeof Octocat> = {
 	title: 'Octocat',
 	component: Octocat,
 	args: {
-		width: 800,
-		height: 600,
-		backgroundColor: "black"
 	}
 };
 
