@@ -8,6 +8,7 @@ const meta: Meta<typeof Octocat> = {
 	title: 'Octocat',
 	component: Octocat,
 	args: {
+		href: "https://github.com/S-N-O-R-L-A-X/S-N-O-R-L-A-X.github.io"
 	}
 };
 
