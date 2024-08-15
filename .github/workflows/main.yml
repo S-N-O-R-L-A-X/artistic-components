@@ -10,14 +10,47 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.build-publish.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-    - id: build-publish
-      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
-      with:
-        path: storybook-static # change to your build folder
-        build_command: npm run build-storybook
+  - deploy:
+      environment:
+        name: github-pages
+        url: ${{ steps.build-publish.outputs.page_url }}
+      runs-on: ubuntu-latest
+      steps:
+      - id: build-publish
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          path: storybook-static # change to your build folder
+          build_command: npm run build-storybook
+  - publish:
+      # 在 Ubuntu 最新版本上运行作业
+      runs-on: ubuntu-latest
+      steps:
+          # 使用 actions/checkout 检出当前代码
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+          # 设置 Node.js 环境
+        - name: Set up Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 22.2.0
+
+          # 安装项目依赖，并编译
+        - name: Install dependencies
+          run: |
+            npm i
+            npm run build
+          
+          # 添加access token到.npmrc
+      - name: Add Npm Token
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.ART }}" >> ./.npmrc
+          ls -al
+          cat ./.npmrc
+        
+        # 发布到 npm registry
+      - name: Publish to npm
+        run: npm publish
+        env:
+          # 读取github的secrets变量，这里的NPM_TOKEN是前面设置的变量名
+          NPM_TOKEN: ${{ secrets.ART }}
