@@ -7,8 +7,8 @@
   z-index: 1;
 }
 
-.github-corner:hover .octo-body {
-  animation: octocat-push .56s ease-in-out;
+.github-corner:hover .nod .octo-body {
+  animation: octocat-nod .56s ease-in-out;
 }
 
 @media screen and (max-width: 768px) {
@@ -17,11 +17,12 @@
   }
 
   .github-corner .octo-arm {
-    animation: octocat-push .56s ease-in-out;
+    animation: octocat-nod .56s ease-in-out;
   }
 }
 
-@keyframes octocat-push {
+@keyframes octocat-nod {
+
   0%,
   to {
     transform: rotate(10deg);
