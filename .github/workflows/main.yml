@@ -32,7 +32,7 @@ jobs:
             node-version: 22.2.0
         - name: Install dependencies # 安装项目依赖，并编译
           run: |
-            npm i
+            npm ci
             npm run build
         - name: Add Npm Token # 添加access token到.npmrc
           run: |
@@ -42,4 +42,4 @@ jobs:
         - name: Publish to npm # 发布到 npm registry
           run: npm publish
           env:
-            NPM_TOKEN: ${{ secrets.ART }} # 读取github的secrets变量，这里的NPM_TOKEN是前面设置的变量名
+          - NPM_TOKEN: ${{ secrets.ART }} # 读取github的secrets变量，这里的NPM_TOKEN是前面设置的变量名
