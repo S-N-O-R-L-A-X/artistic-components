@@ -10,36 +10,36 @@ permissions:
   id-token: write
 
 jobs:
-  - deploy:
-      environment:
-        name: github-pages
-        url: ${{ steps.build-publish.outputs.page_url }}
-      runs-on: ubuntu-latest
-      steps:
-      - id: build-publish
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.build-publish.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+    - id: build-publish
+      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+      with:
+        path: storybook-static # change to your build folder
+        build_command: npm run build-storybook
+  publish:
+    runs-on: ubuntu-latest # 在 Ubuntu 最新版本上运行作业
+    steps:
+      - name: Checkout code # 使用 actions/checkout 检出当前代码
+        uses: actions/checkout@v4
+      - name: Set up Node.js # 设置 Node.js 环境
+        uses: actions/setup-node@v4
         with:
-          path: storybook-static # change to your build folder
-          build_command: npm run build-storybook
-  - publish:
-      runs-on: ubuntu-latest # 在 Ubuntu 最新版本上运行作业
-      steps:
-        - name: Checkout code # 使用 actions/checkout 检出当前代码
-          uses: actions/checkout@v4
-        - name: Set up Node.js # 设置 Node.js 环境
-          uses: actions/setup-node@v4
-          with:
-            node-version: 22.2.0
-        - name: Install dependencies # 安装项目依赖，并编译
-          run: |
-            npm ci
-            npm run build
-        - name: Add Npm Token # 添加access token到.npmrc
-          run: |
-            echo "//registry.npmjs.org/:_authToken=${{ secrets.ART }}" >> ./.npmrc
-            ls -al
-            cat ./.npmrc
-        - name: Publish to npm # 发布到 npm registry
-          run: npm publish
-          env:
-          - NPM_TOKEN: ${{ secrets.ART }} # 读取github的secrets变量，这里的NPM_TOKEN是前面设置的变量名
+          node-version: 22.2.0
+      - name: Install dependencies # 安装项目依赖，并编译
+        run: |
+          npm ci
+          npm run build
+      - name: Add Npm Token # 添加access token到.npmrc
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.ART }}" >> ./.npmrc
+          ls -al
+          cat ./.npmrc
+      - name: Publish to npm # 发布到 npm registry
+        run: npm publish
+        env:
+        - NPM_TOKEN: ${{ secrets.ART }} # 读取github的secrets变量，这里的NPM_TOKEN是前面设置的变量名
