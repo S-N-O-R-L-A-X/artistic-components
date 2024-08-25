@@ -37,10 +37,10 @@ jobs:
          npm run build
      - name: Add Npm Token # 添加access token到.npmrc
        run: |
-         echo "//registry.npmjs.org/:_authToken=${{ secrets.ART }}" >> ./.npmrc
+         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ./.npmrc
          ls -al
          cat ./.npmrc
      - name: Publish to npm # 发布到 npm registry
        run: npm publish
        env:
-         NPM_TOKEN: ${{ secrets.ART }} # 读取github的secrets变量，这里的NPM_TOKEN是前面设置的变量名
+         NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # 读取github的secrets变量，这里的NPM_TOKEN是前面设置的变量名
