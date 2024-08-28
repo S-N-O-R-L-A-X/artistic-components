@@ -94,13 +94,13 @@ const RainStream = (props: RainStreamProps) => {
 	);
 };
 
-interface MatrixRainProps extends Omit<RainStreamProps, "width" | "height"> {
+interface CharacterRainProps extends Omit<RainStreamProps, "width" | "height"> {
 	backgroundColor?: string;
 	width?: string | number;
 	height: string | number;
 }
 
-const MatrixRain = (props: MatrixRainProps) => {
+const CharacterRain = (props: CharacterRainProps) => {
 	const { width = 800, height = 400, backgroundColor = "black", fontFamily = "matrixFont", fontColor = "#20c20e", fontSize = 48, ...rest } = props;
 	const containerRef = useRef<HTMLDivElement>(null);
 	const containerSize = { width: Number(width), height: Number(height) }
@@ -130,4 +130,4 @@ const MatrixRain = (props: MatrixRainProps) => {
 	);
 };
 
-export default MatrixRain;
+export default CharacterRain;
