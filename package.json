@@ -1,8 +1,12 @@
 {
   "name": "artistic-components",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "author": "snorlax.xu",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "npm run storybook",
     "build": "tsc && npm run copy-files",
