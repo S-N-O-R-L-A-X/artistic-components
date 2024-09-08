@@ -1,7 +1,7 @@
 import { HTMLAttributes, ReactNode } from "react";
 import styles from "./GlassCard.module.css";
 
-interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
+export interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
 	title?: string;
 	text?: ReactNode;
 }

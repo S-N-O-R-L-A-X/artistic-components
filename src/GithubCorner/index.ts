@@ -1,0 +1,1 @@
+export { default as Octocat, type OctocatProps } from "./Octocat";

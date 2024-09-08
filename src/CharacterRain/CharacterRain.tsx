@@ -24,7 +24,7 @@ function getMutatedStream(stream: string[], charset: string): string[] {
 	return newStream;
 };
 
-interface RainStreamProps extends HTMLAttributes<HTMLDivElement> {
+export interface RainStreamProps extends HTMLAttributes<HTMLDivElement> {
 	charset?: string;
 	fontFamily?: string;
 	fontColor?: string;
@@ -94,7 +94,7 @@ const RainStream = (props: RainStreamProps) => {
 	);
 };
 
-interface CharacterRainProps extends Omit<RainStreamProps, "width" | "height"> {
+export interface CharacterRainProps extends Omit<RainStreamProps, "width" | "height"> {
 	backgroundColor?: string;
 	width?: string | number;
 	height: string | number;
