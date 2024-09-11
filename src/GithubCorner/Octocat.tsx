@@ -1,16 +1,19 @@
+import { HTMLAttributes } from "react";
 import styles from "./Octocat.module.css";
 
 type OctocatAction = "nod" | "wave";
-export interface OctocatProps extends HTMLAnchorElement {
+export interface OctocatProps extends HTMLAttributes<HTMLAnchorElement> {
+	href: string;
+	target?: string;
 	width?: string;
 	height?: string;
 	action?: OctocatAction;
 }
 
 export default function Octocat(props: OctocatProps) {
-	const { href, target = "_blank", action = "nod", width = "5rem", height = "5rem" } = props;
+	const { href, target = "_blank", action = "nod", width = "5rem", height = "5rem", ...rest } = props;
 	return (
-		<a href={href} target={target} className={styles['github-corner']} aria-label="View source on Github">
+		<a href={href} target={target} className={styles['github-corner']} aria-label="View source on Github" {...rest}>
 			<svg viewBox="0 0 250 250" aria-hidden="true" width={width} height={height} className={styles[action]}>
 				<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" className={styles["octo-head"]}></path>
 				<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style={{ transformOrigin: "130px 106px" }} className={styles['octo-arm']}></path>
