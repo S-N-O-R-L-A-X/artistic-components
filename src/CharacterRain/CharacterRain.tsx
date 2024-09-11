@@ -101,7 +101,7 @@ export interface CharacterRainProps extends Omit<RainStreamProps, "width" | "hei
 }
 
 const CharacterRain = (props: CharacterRainProps) => {
-	const { width = 800, height = 400, backgroundColor = "black", fontFamily = "matrixFont", fontColor = "#20c20e", fontSize = 48, ...rest } = props;
+	const { className, width = 800, height = 400, backgroundColor = "black", fontFamily = "matrixFont", fontColor = "#20c20e", fontSize = 48, ...rest } = props;
 	const containerRef = useRef<HTMLDivElement>(null);
 	const containerSize = { width: Number(width), height: Number(height) }
 
@@ -116,7 +116,7 @@ const CharacterRain = (props: CharacterRainProps) => {
 
 	return (
 		<div
-			className={styles.characterRainWrapper}
+			className={styles.characterRainWrapper + " " + className}
 			style={{
 				width,
 				height,

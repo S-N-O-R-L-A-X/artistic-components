@@ -7,9 +7,9 @@ export interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export default function GlassCard(props: GlassCardProps) {
-	const { title, text, ...rest } = props;
+	const { className, title, text, ...rest } = props;
 	return (
-		<div className={styles.glassCard} {...rest}>
+		<div className={styles.glassCard + " " + className} {...rest}>
 			<div className={styles.content}>
 				<h2>{title}</h2>
 				{text}
