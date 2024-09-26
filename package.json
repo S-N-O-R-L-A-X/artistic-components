@@ -1,6 +1,6 @@
 {
   "name": "artistic-components",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "type": "module",
   "author": "snorlax.xu",
   "main": "dist/index.js",
