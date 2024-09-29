@@ -1,0 +1,35 @@
+name: Npm publish
+on:
+  push:
+    tags:
+      - "v*" # 这段的意思是仅在出现名为 v 字符开头的tag时，触发此任务，如v1.2.1
+      
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.2.0
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm run build
+      - name: Add Npm Token # add access token to .npmrc
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ./.npmrc
+          ls -al
+          cat ./.npmrc
+      - name: Publish to npm # publish to npm registry
+        run: npm publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.ART }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
