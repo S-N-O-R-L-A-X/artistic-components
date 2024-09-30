@@ -13,21 +13,26 @@ const meta = {
 		layout: 'centered',
 	},
 	// This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-	tags: ['autodocs'],
+	// tags: ['autodocs'],
 	// More on argTypes: https://storybook.js.org/docs/api/argtypes
 	argTypes: {
+		text: {
+			description: 'ReactNode',
+		},
 		style: { backgroundColor: { control: 'color' } }
 	},
 	// Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-	args: { onClick: fn() },
+	args: {
+		onClick: fn(),
+		title: "Example Card",
+		text: <p>example content</p>,
+	},
 } satisfies Meta<typeof GlassCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-	args: {
-		title: "Example Card",
-		text: <p>example content</p>,
-	},
+	name: "example",
+	render: (args) => <GlassCard {...args} />
 };

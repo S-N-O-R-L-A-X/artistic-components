@@ -13,7 +13,10 @@ const meta = {
 		layout: 'centered',
 	},
 	// This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-	tags: ['autodocs'],
+	// tags: ['autodocs'],
+	args: {
+		text: "example content",
+	},
 	// More on argTypes: https://storybook.js.org/docs/api/argtypes
 	argTypes: {
 		style: { backgroundColor: { control: 'color' } }
@@ -24,7 +27,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-	args: {
-		text: "example content",
-	},
+	name: "example",
+	render: (args) => <SpotlightText {...args} />
 };
