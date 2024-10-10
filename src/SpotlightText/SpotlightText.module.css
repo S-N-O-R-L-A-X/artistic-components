@@ -1,5 +1,4 @@
 .spotlight {
-  --backgroundImageURL: "";
   color: #333;
   margin: 0;
   padding: 0;
@@ -17,11 +16,18 @@
   -webkit-clip-path: ellipse(100px 100px at 0% 50%);
   clip-path: ellipse(100px 100px at 0% 50%);
   animation: spotlight 5s infinite;
-  background-image: var(--background-image);
   background-size: 150%;
   background-position: center center;
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+.spotlight-color::after {
+  background-image: linear-gradient(to right, var(--spotlight-colors));
+}
+
+.spotlight-image::after {
+  background-image: var(--spotlight-image);
 }
 
 @keyframes spotlight {
