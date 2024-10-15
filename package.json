@@ -8,6 +8,8 @@
     "dist"
   ],
   "scripts": {
+    "patch": "npm version patch && git tag v$(node -p -e \"require('./package.json').version\") && git push origin main --tags",
+    "minor": "npm version minor && git tag v$(node -p -e \"require('./package.json').version\") && git push origin main --tags",
     "dev": "npm run storybook",
     "build": "tsc && npm run copy-files",
     "copy-files": "copyfiles -u 1 'src/**/*.{css,png,d.ts}' 'dist/'",
