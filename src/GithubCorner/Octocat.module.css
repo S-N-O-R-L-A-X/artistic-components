@@ -8,6 +8,10 @@
   animation: octocat-nod .56s ease-in-out;
 }
 
+.github-corner:hover .wave .octo-arm {
+  animation: octocat-wave .56s ease-in-out;
+}
+
 @media screen and (max-width: 768px) {
   .github-corner:hover .octo-arm {
     animation: none;
@@ -19,7 +23,6 @@
 }
 
 @keyframes octocat-nod {
-
   0%,
   to {
     transform: rotate(10deg);
@@ -35,6 +38,25 @@
     transform: rotate(10deg);
   }
 }
+
+
+@keyframes octocat-wave {
+  0%,
+  to {
+    transform: rotate(20deg);
+  }
+ 
+  20%,
+  60% {
+    transform: rotate(20deg);
+  }
+ 
+  40%,
+  80% {
+    transform: rotate(20deg);
+  }
+ }
+
 
 .github-corner svg {
   color: #fff;
