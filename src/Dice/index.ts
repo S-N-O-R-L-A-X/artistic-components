@@ -1,0 +1,1 @@
+export { default as Dice, type DiceProps } from "./Dice";

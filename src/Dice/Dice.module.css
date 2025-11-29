@@ -1,0 +1,61 @@
+.dice {
+	width: 8rem;
+	height: 8rem;
+	padding: 1rem;
+	background-color: rgb(255, 0, 0);
+	border-radius: 10%;
+	display: grid;
+	grid-template-areas:
+		"r1c1 r1c2 r1c3"
+		"r2c1 r2c2 r2c3"
+		"r3c1 r3c2 r3c3";
+	align-items:center;
+	justify-items: center;
+}
+
+.dice.clickable {
+	cursor: pointer;
+}
+
+.dot {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	background-color: rgb(0, 0, 0);
+}
+
+.r1c1 {
+	grid-area: r1c1;
+}
+
+.r1c2 {
+	grid-area: r1c2;
+}
+
+.r1c3 {
+	grid-area: r1c3;
+}
+
+.r2c1 {
+	grid-area: r2c1;
+}
+
+.r2c2 {
+	grid-area: r2c2;
+}
+
+.r2c3 {
+	grid-area: r2c3;
+}
+
+.r3c1 {
+	grid-area: r3c1;
+}
+
+.r3c2 {
+	grid-area: r3c2;
+}
+
+.r3c3 {
+	grid-area: r3c3;
+}
