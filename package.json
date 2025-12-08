@@ -1,13 +1,20 @@
 {
   "name": "artistic-components",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "author": "snorlax.xu",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
-  "keywords": [ "frontend", "react", "art", "artistic", "component", "beautiful" ],
+  "keywords": [
+    "frontend",
+    "react",
+    "art",
+    "artistic",
+    "component",
+    "beautiful"
+  ],
   "scripts": {
     "patch": "npm version patch && git tag v$(node -p -e \"require('./package.json').version\") && git push origin main --tags",
     "minor": "npm version minor && git tag v$(node -p -e \"require('./package.json').version\") && git push origin main --tags",
